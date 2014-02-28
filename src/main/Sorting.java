@@ -73,7 +73,7 @@ public class Sorting {
 	    	Random generator = new Random();
 	    	int[] ret = new int[n];
 	    	for(int j = 0;j < n;j++) {
-	    		ret[j] = generator.nextInt(1000000000)* (generator.nextBoolean() ? 1 : -1);
+	    		ret[j] = generator.nextInt(2000000000);//* (generator.nextBoolean() ? 1 : -1);
 	    	}
 	    	return ret;
 	    }
@@ -94,9 +94,12 @@ public class Sorting {
 			Bubblesort bsSort = new Bubblesort();
 			final XYSeries bubblesortSeries = new XYSeries("Bubblesort");
 			*/
-			final int[] nvalues = {5,10,50,100,500,1000,5000,10000,50000,750000,100000,300000,500000,1000000,5000000,7500000,10000000};
+			final int[] nvalues = {5,10,50,100,500,1000,5000,10000,50000,750000,100000,300000,500000,1000000,5000000,7500000,10000000,50000000};
 			
 			final XYSeries javasortSeries = new XYSeries("Javasort");
+			
+			RadixSort radixSort = new RadixSort();
+			final XYSeries radixsortSeries = new XYSeries("Radixsort");
 			
 			int num = nvalues.length;
 			for(int i = 0;i < num;i++) {
@@ -132,6 +135,14 @@ public class Sorting {
 				endTime = System.currentTimeMillis();
 				timeElapsed = (endTime - startTime)/1e3;
 				javasortSeries.add(nvalues[i],timeElapsed);
+				
+				values = getRandom(nvalues[i]);
+				startTime = System.currentTimeMillis();
+				radixSort.sort(values);
+				endTime = System.currentTimeMillis();
+				timeElapsed = (endTime - startTime)/1e3;
+				radixsortSeries.add(nvalues[i],timeElapsed);
+				
 			}
 			
 		
@@ -139,7 +150,7 @@ public class Sorting {
 			ret.addSeries(mergesortSeries);
 			ret.addSeries(heapsortSeries);
 			ret.addSeries(javasortSeries);
-			
+			ret.addSeries(radixsortSeries);
 	        return ret;
 	    }
 	    
